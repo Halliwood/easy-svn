@@ -1,25 +1,41 @@
 # easy-svn
 Make svn easy to used in nodejs.
 
+# Install
+
+`npm i @taiyosen/easy-svn`
+
 # How to use
 
 ```Typescript
-let svn = new SVNClient({
-    cwd: 'E:/your-svn-workspace',
-    responsitory: 'svn://your-svn-responsitory'
+let svn = new SVNClient();
+// config is optional.
+svn.setConfig({
+    responsitory: 'svn://your-svn-responsitory', 
+    username: 'your-svn-username', 
+    password: 'your-svn-password', 
+    cwd: 'E:/your-svn-workspace', 
+    silent: true
 });
-await svn.cleanup(true);
+await svn.cleanup();
+await svn.cleanup(true, 'E:/foo');
 await svn.revert();
+await svn.revert('E:/foo', 'E:/bar');
 await svn.update();
+await svn.addUnversioned('.');
 ```
 
-# New a SVNClient instance
+# Set a default configuration
 
-The constructor of SVNClient requires an object described below:
+* [responsitory] - works if no url given when calling `checkout`
+* [username] - `--username` option will be enabled
+* [password] - `--password` option will be enabled
+* [cwd] - works as the default path when calling `checkout`/`update`/`commit`/...
+* [silent] - no log or error details if set true
 
 ```Typescript
 SVNConfig {
-    responsitory: string;
+    responsitory?: string;
     username?: string;
     password?: string;
     cwd?: string;
@@ -30,53 +46,65 @@ SVNConfig {
 # Check out 
 
 ```Typescript
-checkout(): Promise<string>;
+checkout(url?: string, path?: string): Promise<string>;
 ```
 
 # update
 
 ```Typescript
-update(): Promise<string>;
+update(...paths: string[]): Promise<string>;
 ```
 
 # commit
 
 ```Typescript
-commit(msg: string): Promise<string>;
+commit(msg: string, ...paths: string[]): Promise<string>;
 ```
 
 # add
 
 ```Typescript
-add(paths: string[]): Promise<string>;
+add(...paths: string[]): Promise<string>;
 ```
 
 # del
 
 ```Typescript
-del(paths: string[], msg: string): Promise<string>;
+del(msg: string, ...paths: string[]): Promise<string>;
 ```
 
 # info
 
 ```Typescript
-info(): Promise<string>;
+info(...targets: string[]): Promise<string>;
 ```
 
 # status
 
 ```Typescript
-status(): Promise<string>;
+status(...paths: string[]): Promise<string>;
 ```
 
 # log
 
 ```Typescript
-log(): Promise<string>;
+log(path?: string): Promise<string>;
 ```
 
 # revert
 
 ```Typescript
-revert(): Promise<string>;
+revert(...paths: string[]): Promise<string>;
+```
+
+# cleanup
+
+```Typescript
+cleanup(rmUnversioned?: boolean, ...wcpaths: string[]): Promise<string>;
+```
+
+# addUnversioned
+
+```Typescript
+addUnversioned(...paths: string[]): Promise<string>;
 ```
