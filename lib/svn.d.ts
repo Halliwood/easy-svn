@@ -14,7 +14,7 @@ export declare class SVNClient {
     private cfg?;
     setConfig(cfg: SVNConfig): void;
     cmd(command: string, params?: string[], options?: SpawnOptionsWithoutStdio): Promise<string>;
-    checkout(url: string, path?: string): Promise<string>;
+    checkout(url?: string, path?: string): Promise<string>;
     update(...paths: string[]): Promise<string>;
     commit(msg: string, ...paths: string[]): Promise<string>;
     add(...paths: string[]): Promise<string>;
@@ -30,5 +30,6 @@ export declare class SVNClient {
      */
     cleanup(rmUnversioned?: boolean, ...wcpaths: string[]): Promise<string>;
     addUnversioned(...paths: string[]): Promise<string>;
+    getRevision(url?: string): Promise<number>;
     private get defaultCWD();
 }

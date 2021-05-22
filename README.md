@@ -1,7 +1,11 @@
 # easy-svn
-Make svn easy to used in nodejs.
+Make it easy to use svn in nodejs.
 
 # Install
+
+First, make sure a command SVN has been installed, such as CollabNetSunversion.
+
+Then~
 
 `npm i @taiyosen/easy-svn`
 
@@ -17,12 +21,12 @@ svn.setConfig({
     cwd: 'E:/your-svn-workspace', 
     silent: true
 });
-await svn.cleanup();
-await svn.cleanup(true, 'E:/foo');
-await svn.revert();
-await svn.revert('E:/foo', 'E:/bar');
-await svn.update();
-await svn.addUnversioned('.');
+await svn.cleanup();  // cleanup E:/your-svn-workspace
+await svn.cleanup(true, 'E:/foo');  // cleanup E:/foo
+await svn.revert();  // revert E:/your-svn-workspace
+await svn.revert('E:/foo', 'E:/bar');  // revert E:/foo & E:/bar
+await svn.update();  // update E:/your-svn-workspace
+await svn.addUnversioned('.');  // add unversioned files in .
 ```
 
 # Set a default configuration
@@ -107,4 +111,10 @@ cleanup(rmUnversioned?: boolean, ...wcpaths: string[]): Promise<string>;
 
 ```Typescript
 addUnversioned(...paths: string[]): Promise<string>;
+```
+
+# addUnversioned
+
+```Typescript
+async getRevision(url?: string): Promise<number>;
 ```
