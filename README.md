@@ -113,7 +113,7 @@ cleanup(rmUnversioned?: boolean, ...wcpaths: string[]): Promise<string>;
 addUnversioned(...paths: string[]): Promise<string>;
 ```
 
-# addUnversioned
+# getRevision
 
 ```Typescript
 async getRevision(url?: string): Promise<number>;
