@@ -7,7 +7,7 @@
     "test": "tsc && node lib/index.js",
     "build": "tsc",
     "release": "npm config set registry=https://registry.npmjs.org && npm version patch && npm publish --access=public",
-    "setproxy": "git config --global http.https://github.com.proxy socks5://127.0.0.1:1080 && git config --global https.https://github.com.proxy socks5://127.0.0.1:1080",
+    "setproxy": "git config --global http.https://github.com.proxy socks5://127.0.0.1:10808 && git config --global https.https://github.com.proxy socks5://127.0.0.1:10808",
     "unsetproxy": "git config --global --unset http.proxy",
     "unsetproxy2": "git config --global --unset https.proxy"
   },
