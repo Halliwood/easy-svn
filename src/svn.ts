@@ -1,4 +1,5 @@
 import { spawn, SpawnOptionsWithoutStdio } from 'child_process'
+import p from 'path';
 
 export interface SVNConfig {
     responsitory?: string;
@@ -18,7 +19,7 @@ export class SVNClient {
         this.cfg = cfg;
     }
 
-    cmd(command: string, params?: string[], options?: SpawnOptionsWithoutStdio): Promise<string> {
+    async cmd(command: string, params?: string[], options?: SpawnOptionsWithoutStdio): Promise<string> {
         this.text = '';
         // options = Object.assign(options || {}, { cwd: this.cfg.cwd });
         return new Promise((resolve: (data: string) => void, reject: (error: Error) => void) => {
@@ -61,57 +62,69 @@ export class SVNClient {
         });
     }
 
-    checkout(url?: string, path?: string): Promise<string> {
-        return this.cmd('co', this.joinUsernameAndPassword([url || this.cfg?.responsitory!, path || this.defaultCWD]));
+    async checkout(url?: string, path?: string): Promise<string> {
+        if(!path) path = this.defaultCWD;
+        if(url) {
+            // 检查是否单个文件
+            let infoStr = await this.info(url);
+            if(infoStr.includes('Node Kind: file')) {
+                // single file
+                let nmc = infoStr.match(/Name: (\S+)/);
+                let name = nmc![1];
+                await this.cmd('co', this.joinUsernameAndPassword([url.substr(0, url.length - name.length), path, '--depth=empty']));
+                return this.update(p.join(path, name));
+            }
+        }
+        return this.cmd('co', this.joinUsernameAndPassword([url || this.cfg?.responsitory!, path]));
     }
 
-    update(...paths: string[]): Promise<string> {
+    async update(...paths: string[]): Promise<string> {
         if(!paths.length) {
             paths = [this.defaultCWD];
         }
         return this.cmd('up', this.joinUsernameAndPassword(paths));
     }
 
-    commit(msg: string, ...paths: string[]): Promise<string> {
+    async commit(msg: string, ...paths: string[]): Promise<string> {
         if(!paths.length) {
             paths = [this.defaultCWD];
         }
         return this.cmd('ci', this.joinUsernameAndPassword([...paths, `-m ${msg || 'no message'}`]));
     }
 
-    add(...paths: string[]): Promise<string> {
+    async add(...paths: string[]): Promise<string> {
         if(!paths.length) {
             paths = [this.defaultCWD];
         }
         return this.cmd('add', this.joinUsernameAndPassword(['--force', '--parents', ...paths]));
     }
 
-    del(msg: string, ...paths: string[]): Promise<string> {
+    async del(msg: string, ...paths: string[]): Promise<string> {
         if(!paths.length) {
             paths = [this.defaultCWD];
         }
         return this.cmd('del', this.joinUsernameAndPassword([`-m ${msg || 'no message'}`, ...paths]));
     }
 
-    info(...targets: string[]): Promise<string> {
+    async info(...targets: string[]): Promise<string> {
         if(!targets.length) {
             targets = [this.defaultCWD];
         }
         return this.cmd('info', this.joinUsernameAndPassword(targets));
     }
 
-    status(...paths: string[]): Promise<string> {
+    async status(...paths: string[]): Promise<string> {
         if(!paths.length) {
             paths = [this.defaultCWD];
         }
         return this.cmd('status', this.joinUsernameAndPassword(paths));
     }
 
-    log(path?: string): Promise<string> {
+    async log(path?: string): Promise<string> {
         return this.cmd('log', this.joinUsernameAndPassword([path || this.defaultCWD]));
     }
 
-    revert(...paths: string[]): Promise<string> {
+    async revert(...paths: string[]): Promise<string> {
         if(!paths.length) {
             paths = [this.defaultCWD];
         }
@@ -123,7 +136,7 @@ export class SVNClient {
      * @param rmUnversioned CollabNetSubversion-client should be great than 1.9.0
      * @returns 
      */
-    cleanup(rmUnversioned?: boolean, ...wcpaths: string[]): Promise<string> {
+    async cleanup(rmUnversioned?: boolean, ...wcpaths: string[]): Promise<string> {
         if(!wcpaths.length) {
             wcpaths = [this.defaultCWD];
         }
@@ -132,7 +145,7 @@ export class SVNClient {
         return this.cmd('cleanup', params);
     }
 
-    addUnversioned(...paths: string[]): Promise<string> {
+    async addUnversioned(...paths: string[]): Promise<string> {
         if(!paths.length) {
             paths = [this.defaultCWD];
         }

@@ -27,6 +27,10 @@ await svn.revert();  // revert E:/your-svn-workspace
 await svn.revert('E:/foo', 'E:/bar');  // revert E:/foo & E:/bar
 await svn.update();  // update E:/your-svn-workspace
 await svn.addUnversioned('.');  // add unversioned files in .
+await svn.checkout('svn://your-svn-responsitory/some-folder');  // check out into some-folder
+await svn.checkout('svn://your-svn-responsitory/some-folder', 'the-specified-folder');  // check out into a specified folder
+// you can also checkout a s single file, like:
+await svn.checkout('svn://your-svn-responsitory/some-folder/some-file.ts');
 ```
 
 # Set a default configuration
