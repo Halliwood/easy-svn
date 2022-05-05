@@ -7,6 +7,7 @@ export interface SVNConfig {
     password?: string;
     cwd?: string;
     silent?: boolean;
+    globalParams?: string[];
 }
 
 export class SVNClient {
@@ -25,7 +26,10 @@ export class SVNClient {
         return new Promise((resolve: (data: string) => void, reject: (error: Error) => void) => {
             this.isRuning = true;
 
-            let svnParams = [command, '--non-interactive', '--trust-server-cert'];
+            let svnParams = [command];
+            if(this.cfg?.globalParams) {
+                svnParams.push(...this.cfg.globalParams);
+            }
             
             if(params) svnParams = svnParams.concat(params);
 

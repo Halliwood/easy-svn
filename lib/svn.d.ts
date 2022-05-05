@@ -6,6 +6,7 @@ export interface SVNConfig {
     password?: string;
     cwd?: string;
     silent?: boolean;
+    globalParams?: string[];
 }
 export declare class SVNClient {
     private text?;

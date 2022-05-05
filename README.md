@@ -54,67 +54,67 @@ SVNConfig {
 # Check out 
 
 ```Typescript
-checkout(url?: string, path?: string): Promise<string>;
+async checkout(url?: string, path?: string): Promise<string>;
 ```
 
 # update
 
 ```Typescript
-update(...paths: string[]): Promise<string>;
+async update(...paths: string[]): Promise<string>;
 ```
 
 # commit
 
 ```Typescript
-commit(msg: string, ...paths: string[]): Promise<string>;
+async commit(msg: string, ...paths: string[]): Promise<string>;
 ```
 
 # add
 
 ```Typescript
-add(...paths: string[]): Promise<string>;
+async add(...paths: string[]): Promise<string>;
 ```
 
 # del
 
 ```Typescript
-del(msg: string, ...paths: string[]): Promise<string>;
+async del(msg: string, ...paths: string[]): Promise<string>;
 ```
 
 # info
 
 ```Typescript
-info(...targets: string[]): Promise<string>;
+async info(...targets: string[]): Promise<string>;
 ```
 
 # status
 
 ```Typescript
-status(...paths: string[]): Promise<string>;
+async status(...paths: string[]): Promise<string>;
 ```
 
 # log
 
 ```Typescript
-log(path?: string): Promise<string>;
+async log(path?: string): Promise<string>;
 ```
 
 # revert
 
 ```Typescript
-revert(...paths: string[]): Promise<string>;
+async revert(...paths: string[]): Promise<string>;
 ```
 
 # cleanup
 
 ```Typescript
-cleanup(rmUnversioned?: boolean, ...wcpaths: string[]): Promise<string>;
+async cleanup(rmUnversioned?: boolean, ...wcpaths: string[]): Promise<string>;
 ```
 
 # addUnversioned
 
 ```Typescript
-addUnversioned(...paths: string[]): Promise<string>;
+async addUnversioned(...paths: string[]): Promise<string>;
 ```
 
 # getRevision
