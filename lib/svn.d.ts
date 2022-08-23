@@ -23,7 +23,7 @@ export declare class SVNClient {
     del(msg: string, ...paths: string[]): Promise<string>;
     info(...targets: string[]): Promise<string>;
     status(...paths: string[]): Promise<string>;
-    log(path?: string): Promise<string>;
+    log(path?: string, ...options: string[]): Promise<string>;
     revert(...paths: string[]): Promise<string>;
     /**
      *

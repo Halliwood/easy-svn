@@ -125,8 +125,12 @@ export class SVNClient {
         return this.cmd('status', this.joinUsernameAndPassword(paths));
     }
 
-    async log(path?: string): Promise<string> {
-        return this.cmd('log', this.joinUsernameAndPassword([path || this.defaultCWD]));
+    async log(path?: string, ...options: string[]): Promise<string> {
+        let params = this.joinUsernameAndPassword([path || this.defaultCWD]);
+        if (options.length) {
+            params.push(...options);
+        }
+        return this.cmd('log', params);
     }
 
     async revert(...paths: string[]): Promise<string> {
@@ -160,13 +164,8 @@ export class SVNClient {
     async getRevision(url?: string): Promise<number> {
         if(!url) url = this.cfg?.responsitory;
         if(!url) console.error(`No url provided or default configuration set for getRevision`);
-        let info = await this.cmd('info', this.joinUsernameAndPassword([url!]));
-        let mrt = info.match(/Revision: (\d+)/);
-        let revision = 0;
-        if(mrt) {
-            revision = Number(mrt[1]);
-        }
-        return revision;
+        let info = await this.cmd('info', this.joinUsernameAndPassword([url!, '--show-item', 'revision']));
+        return Number(info);
     }
 
     private joinUsernameAndPassword(params: string[]): string[] {
