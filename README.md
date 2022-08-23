@@ -21,6 +21,7 @@ svn.setConfig({
     cwd: 'E:/your-svn-workspace', 
     silent: true
 });
+await svn.log('.', '-r', 'BASE:HEAD', '-v');  // show the log messages for any incoming changes
 await svn.cleanup();  // cleanup E:/your-svn-workspace
 await svn.cleanup(true, 'E:/foo');  // cleanup E:/foo
 await svn.revert();  // revert E:/your-svn-workspace
@@ -96,7 +97,7 @@ async status(...paths: string[]): Promise<string>;
 # log
 
 ```Typescript
-async log(path?: string): Promise<string>;
+async log(path?: string, ...options: string[]): Promise<string>;
 ```
 
 # revert
