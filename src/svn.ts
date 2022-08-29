@@ -170,24 +170,29 @@ export class SVNClient {
         return Number(info);
     }
 
-    async ignore(wcRoot: string, ...ignoreList: string[]): Promise<string> {
+    async ignore(wcRoot: string, ...ignoreList: string[]): Promise<boolean> {
         if(!ignoreList.length) {
             throw new Error('Nothing to ignore!');
         }
         let oldIgnore = await this.cmd('propget', ['svn:ignore', wcRoot]);
         let lines = oldIgnore.split(/\r?\n+/);
+        let changed = false;
         for (let i of ignoreList) {
             if (!lines.includes(i)) {
                 lines.push(i);
+                changed = true;
             }
+        }
+        if (!changed) {
+            return false;
         }
         const fw = promisify(fs.writeFile);
         const ignoreFile = p.join(wcRoot, `easy-svn@ignore-${Date.now()}.txt`);
         await fw(ignoreFile, lines.join('\n'), );
-        const info = await this.cmd('propset', ['svn:ignore', wcRoot, '-F', ignoreFile]);
+        await this.cmd('propset', ['svn:ignore', wcRoot, '-F', ignoreFile]);
         const ul = promisify(fs.unlink);
         await ul(ignoreFile);
-        return info;
+        return true;
     }
 
     private joinUsernameAndPassword(params: string[]): string[] {

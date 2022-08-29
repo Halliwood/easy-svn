@@ -127,5 +127,5 @@ async getRevision(url?: string): Promise<number>;
 # getRevision
 
 ```Typescript
-async ignore(wcRoot: string, ...ignoreList: string[]): Promise<string>;
+async ignore(wcRoot: string, ...ignoreList: string[]): Promise<boolean>;
 ```
