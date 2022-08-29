@@ -27,7 +27,11 @@
   },
   "homepage": "https://github.com/Halliwood/easy-svn#readme",
   "devDependencies": {
+    "@types/fs-promise": "^2.0.0",
     "@types/node": "^14.14.37",
     "@types/typescript": "^2.0.0"
+  },
+  "dependencies": {
+    "fs-promise": "^2.0.3"
   }
 }

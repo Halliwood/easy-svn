@@ -33,6 +33,7 @@ export declare class SVNClient {
     cleanup(rmUnversioned?: boolean, ...wcpaths: string[]): Promise<string>;
     addUnversioned(...paths: string[]): Promise<string>;
     getRevision(url?: string): Promise<number>;
+    ignore(wcRoot: string, ...ignoreList: string[]): Promise<string>;
     private joinUsernameAndPassword;
     private get defaultCWD();
 }

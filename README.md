@@ -123,3 +123,9 @@ async addUnversioned(...paths: string[]): Promise<string>;
 ```Typescript
 async getRevision(url?: string): Promise<number>;
 ```
+
+# getRevision
+
+```Typescript
+async ignore(wcRoot: string, ...ignoreList: string[]): Promise<string>;
+```

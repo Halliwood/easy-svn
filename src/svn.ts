@@ -1,5 +1,7 @@
 import { spawn, SpawnOptionsWithoutStdio } from 'child_process'
 import p from 'path';
+import fs from 'fs';
+import { promisify } from 'util';
 
 export interface SVNConfig {
     responsitory?: string;
@@ -166,6 +168,26 @@ export class SVNClient {
         if(!url) console.error(`No url provided or default configuration set for getRevision`);
         let info = await this.cmd('info', this.joinUsernameAndPassword([url!, '--show-item', 'revision']));
         return Number(info);
+    }
+
+    async ignore(wcRoot: string, ...ignoreList: string[]): Promise<string> {
+        if(!ignoreList.length) {
+            throw new Error('Nothing to ignore!');
+        }
+        let oldIgnore = await this.cmd('propget', ['svn:ignore', wcRoot]);
+        let lines = oldIgnore.split(/\r?\n+/);
+        for (let i of ignoreList) {
+            if (!lines.includes(i)) {
+                lines.push(i);
+            }
+        }
+        const fw = promisify(fs.writeFile);
+        const ignoreFile = p.join(wcRoot, `easy-svn@ignore-${Date.now()}.txt`);
+        await fw(ignoreFile, lines.join('\n'), );
+        const info = await this.cmd('propset', ['svn:ignore', wcRoot, '-F', ignoreFile]);
+        const ul = promisify(fs.unlink);
+        await ul(ignoreFile);
+        return info;
     }
 
     private joinUsernameAndPassword(params: string[]): string[] {
