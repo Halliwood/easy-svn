@@ -30,7 +30,7 @@ await svn.update();  // update E:/your-svn-workspace
 await svn.addUnversioned('.');  // add unversioned files in .
 await svn.checkout('svn://your-svn-responsitory/some-folder');  // check out into some-folder
 await svn.checkout('svn://your-svn-responsitory/some-folder', 'the-specified-folder');  // check out into a specified folder
-// you can also checkout a s single file, like:
+// you can also checkout a single file, like:
 await svn.checkout('svn://your-svn-responsitory/some-folder/some-file.ts');
 ```
 
@@ -124,7 +124,7 @@ async addUnversioned(...paths: string[]): Promise<string>;
 async getRevision(url?: string): Promise<number>;
 ```
 
-# getRevision
+# ignore
 
 ```Typescript
 async ignore(wcRoot: string, ...ignoreList: string[]): Promise<boolean>;
