@@ -63,7 +63,7 @@ export class SVNClient {
                 if(code == 0) {
                     resolve(this.text || '');
                 } else {
-                    reject(new Error(`proc exit with code: ${code}`));
+                    reject(new Error(`cmd 'svn ${svnParams.join(' ')}' failed, error code: ${code}`));
                 }
             })
         });
