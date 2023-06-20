@@ -174,8 +174,13 @@ export class SVNClient {
         if(!ignoreList.length) {
             throw new Error('Nothing to ignore!');
         }
-        let oldIgnore = await this.cmd('propget', ['svn:ignore', wcRoot]);
-        let lines = oldIgnore.split(/\r?\n+/);
+        let lines: string[];
+        try {
+            let oldIgnore = await this.cmd('propget', ['svn:ignore', wcRoot]);
+            lines = oldIgnore.split(/\r?\n+/);
+        } catch(e) {
+            lines = [];
+        }
         let changed = false;
         for (let i of ignoreList) {
             if (!lines.includes(i)) {
