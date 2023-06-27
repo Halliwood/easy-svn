@@ -200,6 +200,10 @@ export class SVNClient {
         return true;
     }
 
+    async copy(src: string, dst: string): Promise<string> {
+        return this.cmd('copy', this.joinUsernameAndPassword([src, dst]));
+    }
+
     private joinUsernameAndPassword(params: string[]): string[] {
         if(this.cfg?.username) {
             params.push('--username', this.cfg.username);
