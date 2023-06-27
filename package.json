@@ -1,6 +1,6 @@
 {
   "name": "@taiyosen/easy-svn",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "description": "Make svn easy to be used in nodejs.",
   "main": "lib/index.js",
   "scripts": {
