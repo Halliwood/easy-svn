@@ -201,7 +201,11 @@ export class SVNClient {
     }
 
     async copy(src: string, dst: string): Promise<string> {
-        return this.cmd('copy', this.joinUsernameAndPassword([src, dst]));
+        return this.cmd('copy', this.joinUsernameAndPassword([src, dst, '--parents']));
+    }
+
+    async list(target: string): Promise<string> {
+        return this.cmd('list', this.joinUsernameAndPassword([target]));
     }
 
     private joinUsernameAndPassword(params: string[]): string[] {

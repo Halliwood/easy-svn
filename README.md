@@ -129,3 +129,29 @@ async getRevision(url?: string): Promise<number>;
 ```Typescript
 async ignore(wcRoot: string, ...ignoreList: string[]): Promise<boolean>;
 ```
+
+# copy
+
+```Typescript
+async copy(src: string, dst: string): Promise<string>;
+```
+
+# list
+
+```Typescript
+async list(target: string): Promise<string>
+```
+
+# any command
+
+```Typescript
+async cmd(command: string, params?: string[], options?: SpawnOptionsWithoutStdio): Promise<string>
+```
+
+for example:
+```Typescript
+import { SVNClient } from "@taiyosen/easy-svn";
+
+const svn = new SVNClient();
+await svn.cmd('add', ['--force', '--parents', '--no-ignore', '.']);
+```

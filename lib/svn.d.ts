@@ -35,6 +35,7 @@ export declare class SVNClient {
     getRevision(url?: string): Promise<number>;
     ignore(wcRoot: string, ...ignoreList: string[]): Promise<boolean>;
     copy(src: string, dst: string): Promise<string>;
+    list(target: string): Promise<string>;
     private joinUsernameAndPassword;
     private get defaultCWD();
 }
