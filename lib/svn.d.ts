@@ -99,9 +99,9 @@ export declare type AddOption = {
     /**disregard default and svn:ignore and svn:global-ignores property ignores */
     noIgnore?: boolean;
     /**enable automatic properties */
-    autoProps: boolean;
+    autoProps?: boolean;
     /**disable automatic properties */
-    noAutoProps: boolean;
+    noAutoProps?: boolean;
     /**add intermediate parents */
     parents?: boolean;
 } & DepthOption & QuiteOption;
@@ -109,9 +109,9 @@ export declare type DeleteOption = {
     /**handle unversioned obstructions as changes */
     force?: boolean;
     /**pass contents of file as additional args */
-    targets?: string;
+    targets?: string[];
     /**use ARG as external editor */
-    editorCmd: string;
+    editorCmd?: string;
     /**set revision property ARG in new revision, using the name[=value] format*/
     withRevprop?: string;
     /**keep path in working copy */
@@ -123,7 +123,7 @@ export declare type CopyOption = {
     /**make intermediate directories */
     parents?: boolean;
     /**use ARG as external editor */
-    editorCmd: string;
+    editorCmd?: string;
     /**set revision property ARG in new revision, using the name[=value] format*/
     withRevprop?: string;
     /**pin externals with no explicit revision to their current revision (recommended when tagging) */

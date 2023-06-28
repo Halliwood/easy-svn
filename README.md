@@ -21,13 +21,22 @@ svn.setConfig({
     cwd: 'E:/your-svn-workspace', 
     silent: true
 });
-await svn.log('.', '-r', 'BASE:HEAD', '-v');  // show the log messages for any incoming changes
+
+// show the log messages for any incoming changes
+await svn.log(['.'], { revision: 'BASE:HEAD', verbose: true });
+// or
+await svn.log('.', '-r', 'BASE:HEAD', '-v');
+
 await svn.cleanup();  // cleanup E:/your-svn-workspace
 await svn.cleanup(true, 'E:/foo');  // cleanup E:/foo
+
 await svn.revert();  // revert E:/your-svn-workspace
 await svn.revert('E:/foo', 'E:/bar');  // revert E:/foo & E:/bar
+
 await svn.update();  // update E:/your-svn-workspace
+
 await svn.addUnversioned('.');  // add unversioned files in .
+
 await svn.checkout('svn://your-svn-responsitory/some-folder');  // check out into some-folder
 await svn.checkout('svn://your-svn-responsitory/some-folder', 'the-specified-folder');  // check out into a specified folder
 // you can also checkout a single file, like:
