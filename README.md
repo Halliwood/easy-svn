@@ -55,48 +55,62 @@ SVNConfig {
 # Check out 
 
 ```Typescript
-async checkout(url?: string, path?: string): Promise<string>;
+async checkout(url?: string | string[], path?: string, option?: CheckoutOption): Promise<string>;
 ```
 
 # update
 
 ```Typescript
+async update(paths: string[], option?: UpdateOption): Promise<string>;
+/**@deprecated */
 async update(...paths: string[]): Promise<string>;
 ```
 
 # commit
 
 ```Typescript
+async commit(paths: string[], option?: CommitOption): Promise<string>;
+/**@deprecated */
 async commit(msg: string, ...paths: string[]): Promise<string>;
 ```
 
 # add
 
 ```Typescript
+async add(paths: string[], option?: AddOption): Promise<string>;
+/**@deprecated */
 async add(...paths: string[]): Promise<string>;
 ```
 
 # del
 
 ```Typescript
+async delete(paths: string | string[], option?: DeleteOption): Promise<string>;
+/**@deprecated */
 async del(msg: string, ...paths: string[]): Promise<string>;
 ```
 
 # info
 
 ```Typescript
+async info(targets: string[], option?: InfoOption): Promise<string>;
+/**@deprecated */
 async info(...targets: string[]): Promise<string>;
 ```
 
 # status
 
 ```Typescript
+async status(paths: string[], option?: StatusOption): Promise<string>;
+/**@deprecated */
 async status(...paths: string[]): Promise<string>;
 ```
 
 # log
 
 ```Typescript
+async log(paths: string[], option?: LogOption): Promise<string>;
+/**@deprecated */
 async log(path?: string, ...options: string[]): Promise<string>;
 ```
 
@@ -133,13 +147,25 @@ async ignore(wcRoot: string, ...ignoreList: string[]): Promise<boolean>;
 # copy
 
 ```Typescript
-async copy(src: string, dst: string): Promise<string>;
+async copy(src: string, dst: string, option?: CopyOption): Promise<string>;
 ```
 
 # list
 
 ```Typescript
-async list(target: string): Promise<string>
+async list(target: string | string[], option?: ListOption): Promise<string>
+```
+
+# lock
+
+```Typescript
+async lock(target: string | string[], option?: LockOption): Promise<string>
+```
+
+# unlock
+
+```Typescript
+async unlock(target: string | string[], option?: UnlockOption): Promise<string>
 ```
 
 # any command
