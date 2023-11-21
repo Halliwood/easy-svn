@@ -219,7 +219,7 @@ export class SVNClient {
         this.cfg = cfg;
     }
 
-    async cmd(command: string, params?: string[], options?: SpawnOptionsWithoutStdio): Promise<string> {
+    async cmd(command: string, params?: string[], options?: SpawnOptionsWithoutStdio, silent?: boolean): Promise<string> {
         this.text = '';
         // options = Object.assign(options || {}, { cwd: this.cfg.cwd });
         return new Promise((resolve: (data: string) => void, reject: (error: Error) => void) => {
@@ -236,19 +236,19 @@ export class SVNClient {
 
             // 执行成功
             proc.stdout.on('data', (data) => {
-                if(!this.cfg?.silent) process.stdout.write(String(data));
+                if(!this.cfg?.silent && !silent) process.stdout.write(String(data));
                 this.text += data;
             })
     
             //执行失败
             proc.stderr.on('data', (data) => {
-                if(!this.cfg?.silent) process.stderr.write(String(data));
+                if(!this.cfg?.silent && !silent) process.stderr.write(String(data));
                 this.err = new Error(String(data));
             })
     
             // 进程错误
             proc.on('error', (error: Error) => {
-                if(!this.cfg?.silent) console.error(error);
+                if(!this.cfg?.silent && !silent) console.error(error);
                 this.isRuning = false;
                 reject(error);
             })
@@ -535,7 +535,7 @@ export class SVNClient {
         }
         let lines: string[];
         try {
-            let oldIgnore = await this.cmd('propget', ['svn:ignore', wcRoot]);
+            let oldIgnore = await this.cmd('propget', ['svn:ignore', wcRoot], undefined, true);
             lines = oldIgnore.split(/\r?\n+/);
         } catch(e) {
             lines = [];

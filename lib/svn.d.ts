@@ -191,7 +191,7 @@ export declare class SVNClient {
     private isRuning;
     private cfg?;
     setConfig(cfg: SVNConfig): void;
-    cmd(command: string, params?: string[], options?: SpawnOptionsWithoutStdio): Promise<string>;
+    cmd(command: string, params?: string[], options?: SpawnOptionsWithoutStdio, silent?: boolean): Promise<string>;
     checkout(url?: string | string[], path?: string, option?: CheckoutOption): Promise<string>;
     update(...paths: string[]): Promise<string>;
     update(paths: string[], option?: UpdateOption): Promise<string>;
