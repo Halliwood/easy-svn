@@ -8,7 +8,11 @@ export declare type TAccept = 'postpone' | 'working' | 'base' | 'mine-conflict' 
 export declare type TShowItem = 'kind' | 'relative-url' | 'repos-root-url' | 'repos-size' | 'revision' | 'last-changed-revision' | 'last-changed-date' | 'last-changed-author' | 'wc-root' | 'schedule' | 'depth' | 'changelist';
 
 export declare interface SVNConfig {
+    /**
+     * @deprecated sorry for the misspelling, please use {@link repository} please.
+     */
     responsitory?: string;
+    repository?: string;
     username?: string;
     password?: string;
     cwd?: string;
@@ -216,6 +220,9 @@ export class SVNClient {
 
     private cfg?: SVNConfig;
     setConfig(cfg: SVNConfig) {
+        if (!cfg.repository && cfg.responsitory) {
+            cfg.repository = cfg.responsitory;
+        }
         this.cfg = cfg;
     }
 
@@ -281,7 +288,7 @@ export class SVNClient {
             }
             params = [url];
         } else {
-            params = url ? url : [this.cfg?.responsitory!];
+            params = url ? url : [this.cfg?.repository!];
         }
         if (path != null) params.push(path);
         if (option != null) {
@@ -523,7 +530,7 @@ export class SVNClient {
     }
 
     async getRevision(url?: string): Promise<number> {
-        if(!url) url = this.cfg?.responsitory;
+        if(!url) url = this.cfg?.repository;
         if(!url) console.error(`No url provided or default configuration set for getRevision`);
         let info = await this.cmd('info', this.joinUsernameAndPassword([url!, '--show-item', 'revision']));
         return Number(info);

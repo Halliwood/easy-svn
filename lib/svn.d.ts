@@ -3,7 +3,11 @@ export declare type TDepth = 'empty' | 'files' | 'immediates' | 'infinity';
 export declare type TAccept = 'postpone' | 'working' | 'base' | 'mine-conflict' | 'theirs-conflict' | 'mine-full' | 'theirs-full' | 'edit' | 'launch' | 'recommended' | 'p' | 'mc' | 'tc' | 'mf' | 'tf' | 'e' | 'l' | 'r';
 export declare type TShowItem = 'kind' | 'relative-url' | 'repos-root-url' | 'repos-size' | 'revision' | 'last-changed-revision' | 'last-changed-date' | 'last-changed-author' | 'wc-root' | 'schedule' | 'depth' | 'changelist';
 export declare interface SVNConfig {
+    /**
+     * @deprecated sorry for the misspelling, please use {@link repository} please.
+     */
     responsitory?: string;
+    repository?: string;
     username?: string;
     password?: string;
     cwd?: string;
