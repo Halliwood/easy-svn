@@ -15,7 +15,7 @@ Then~
 let svn = new SVNClient();
 // config is optional.
 svn.setConfig({
-    responsitory: 'svn://your-svn-responsitory', 
+    repository: 'svn://your-svn-repository', 
     username: 'your-svn-username', 
     password: 'your-svn-password', 
     cwd: 'E:/your-svn-workspace', 
@@ -37,15 +37,15 @@ await svn.update();  // update E:/your-svn-workspace
 
 await svn.addUnversioned('.');  // add unversioned files in .
 
-await svn.checkout('svn://your-svn-responsitory/some-folder');  // check out into some-folder
-await svn.checkout('svn://your-svn-responsitory/some-folder', 'the-specified-folder');  // check out into a specified folder
+await svn.checkout('svn://your-svn-repository/some-folder');  // check out into some-folder
+await svn.checkout('svn://your-svn-repository/some-folder', 'the-specified-folder');  // check out into a specified folder
 // you can also checkout a single file, like:
-await svn.checkout('svn://your-svn-responsitory/some-folder/some-file.ts');
+await svn.checkout('svn://your-svn-repository/some-folder/some-file.ts');
 ```
 
 # Set a default configuration
 
-* [responsitory] - works if no url given when calling `checkout`
+* [repository] - works if no url given when calling `checkout`
 * [username] - `--username` option will be enabled
 * [password] - `--password` option will be enabled
 * [cwd] - works as the default path when calling `checkout`/`update`/`commit`/...
@@ -53,7 +53,7 @@ await svn.checkout('svn://your-svn-responsitory/some-folder/some-file.ts');
 
 ```Typescript
 SVNConfig {
-    responsitory?: string;
+    repository?: string;
     username?: string;
     password?: string;
     cwd?: string;
