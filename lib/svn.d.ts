@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { SpawnOptionsWithoutStdio } from 'child_process';
 export declare type TDepth = 'empty' | 'files' | 'immediates' | 'infinity';
 export declare type TAccept = 'postpone' | 'working' | 'base' | 'mine-conflict' | 'theirs-conflict' | 'mine-full' | 'theirs-full' | 'edit' | 'launch' | 'recommended' | 'p' | 'mc' | 'tc' | 'mf' | 'tf' | 'e' | 'l' | 'r';

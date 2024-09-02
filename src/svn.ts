@@ -488,7 +488,7 @@ export class SVNClient {
                     }
                 }
             }
-            return this.cmd('add', this.joinUsernameAndPassword(svnParams));
+            return this.cmd('log', this.joinUsernameAndPassword(svnParams));
         } else {
             return this.cmd('log', this.joinUsernameAndPassword(params));
         }        
