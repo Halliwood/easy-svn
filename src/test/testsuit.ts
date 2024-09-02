@@ -5,7 +5,7 @@ import { SVNClient } from "../svn.js";
 describe('SVN', function () {
     const tmp = 'tmp';
     if (fs.existsSync(tmp)) {
-        fs.rmdirSync(tmp);
+        fs.rmSync(tmp, { recursive: true, force: true });
     }
     fs.mkdirSync(tmp);
 
